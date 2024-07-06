@@ -1,4 +1,5 @@
-﻿using Reptile;
+﻿using ReplaySystem.Patches;
+using Reptile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ReplaySystem
         private float _playbackSpeed = 1f;
         private ReplayPlaybackCamera _replayCamera;
         private float _currentTime = 0f;
+        public static GameplayUI ui;
         public override void Start()
         {
             Core.Instance.GameInput.DisableControllerMap(0);
@@ -27,10 +29,11 @@ namespace ReplaySystem
             Core.Instance.GameInput.DisableControllerMap(4);
             Core.Instance.GameInput.DisableControllerMap(5);
             _currentTime = 0f;
-            Core.instance.UIManager.gameObject.SetActive(false);
             _replayCamera = ReplayPlaybackCamera.Create();
             _paused = false;
             _playbackSpeed = 1f;
+            UI.Instance.ShowNotification("C : toggle camera mode\r\nR : reset settings\r\nspace : pause\r\n0 to 4 : timeline \r\n(0,25,50,75,100%)\r\nMouse wheel up/down:\r\n -speed up/slow down clip\r\nQ and E : camera pan\r\nH : toggle UI\r\nG : toggle tooltip");
+
         }
 
         public void SkipTo(float time)
@@ -121,6 +124,7 @@ namespace ReplaySystem
         public override void End()
         {
             var lastFrame = Replay.Frames[Replay.Frames.Count - 1];
+            UI.Instance.HideNotification();
             ApplyFrameToWorld(lastFrame, true);
             Core.Instance.GameInput.EnableControllerMap(0);
             Core.Instance.GameInput.EnableControllerMap(1);
@@ -168,6 +172,10 @@ namespace ReplaySystem
             if (Input.GetKeyDown(KeyCode.H))
             {
                 Core.instance.UIManager.gameObject.SetActive(!Core.instance.UIManager.gameObject.activeSelf);
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                UI.m_label1.gameObject.SetActive(!UI.m_label1.gameObject.activeSelf);
             }
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
