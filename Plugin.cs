@@ -12,7 +12,7 @@ namespace ReplaySystem
         public ManualLogSource Log => Logger;
         private const string GUID = "com.LazyDuchess.BRC.ReplaySystem";
         private const string Name = "ReplaySystem";
-        private const string Version = "1.0.0";
+        private const string Version = "0.0.1";
 
         private void Awake()
         {
