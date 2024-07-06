@@ -69,7 +69,7 @@ namespace ReplaySystem
 
         private void OnDestroy()
         {
-            _instance = null;
+            _instance = null; //
         }
     }
 }
